@@ -1,9 +1,52 @@
+import {
+  Routes,
+  Route,
+} from "react-router-dom"
+
+import Navbar from "./components/Navbar"
+
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import Profile from "./pages/Profile"
+import ProtectedRoute from "./routes/ProtectedRoute"
+
 function App() {
+
   return (
+
     <div>
-      <h1 className="text-4xl font-bold">
-        E-commerce App
-      </h1>
+
+      <Navbar />
+
+      <Routes>
+
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+      </Routes>
+
     </div>
   )
 }
