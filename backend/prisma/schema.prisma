@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -14,4 +14,46 @@ model User {
   password  String
   role      String   @default("CUSTOMER")
   createdAt DateTime @default(now())
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  image     String?
+  createdAt DateTime @default(now())
+
+  products Product[]
+}
+
+model Product {
+  id            Int     @id @default(autoincrement())
+  name          String
+  description   String
+  price         Float
+  discountPrice Float?
+  stock         Int
+  sku           String  @unique
+  brand         String?
+  weight        String?
+  isOrganic     Boolean @default(false)
+  isVegan       Boolean @default(false)
+  isGlutenFree  Boolean @default(false)
+
+  categoryId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  images ProductImage[]
+}
+
+model ProductImage {
+  id  Int    @id @default(autoincrement())
+  url String
+
+  productId Int
+
+  product Product @relation(fields: [productId], references: [id])
 }
