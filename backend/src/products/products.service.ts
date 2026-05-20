@@ -23,6 +23,21 @@ export class ProductsService {
     })
   }
 
+  async getProductById(id: number) {
+
+  return this.prisma.product.findUnique({
+
+    where: {
+      id,
+    },
+
+    include: {
+      images: true,
+      category: true,
+    },
+  })
+}
+
   async createProduct(data: CreateProductDto) {
 
     return this.prisma.product.create({

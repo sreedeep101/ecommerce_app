@@ -10,3 +10,13 @@ export const getProducts = async () => {
 
   return res.data
 }
+
+export const getProductById =async (
+  id: string
+) => {
+  const res = await axios.get(
+    `${API}/products/${id}`
+  )
+
+  return res.data
+}

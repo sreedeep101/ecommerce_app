@@ -5,8 +5,8 @@ export default function Navbar() {
   const navigate = useNavigate()
 
   const user = JSON.parse(
-  localStorage.getItem("user") || "null"
-)
+    localStorage.getItem("user") || "null"
+  )
 
   const logout = () => {
 
@@ -39,6 +39,11 @@ export default function Navbar() {
           </>
         ) : (
           <>
+
+            <Link to="/cart">
+              Cart
+            </Link>
+            
             <Link to="/profile">
               Profile
             </Link>
