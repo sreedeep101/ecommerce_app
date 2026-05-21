@@ -12,7 +12,11 @@ import Profile from "./pages/Profile"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import ProductDetails from "./pages/ProductDetails"
 import Cart from "./pages/Cart"
-
+import Checkout from "./pages/Checkout"
+import Orders from "./pages/Orders"
+import AdminOrders from "./pages/admin/AdminOrders"
+import AdminProducts from "./pages/admin/AdminProducts"
+import AdminLayout from "./layouts/AdminLayouts"
 
 
 function App() {
@@ -24,6 +28,7 @@ function App() {
       <Navbar />
 
       <Routes>
+
 
         <Route
           path="/"
@@ -58,6 +63,43 @@ function App() {
           path="/cart"
           element={<Cart />}
         />
+
+        <Route
+          path="/checkout"
+
+          element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/orders"
+
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={<AdminLayout />}
+        >
+
+          <Route
+            path="products"
+            element={<AdminProducts />}
+          />
+
+          <Route
+            path="orders"
+            element={<AdminOrders />}
+          />
+
+        </Route>
 
       </Routes>
 

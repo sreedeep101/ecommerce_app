@@ -12,7 +12,7 @@ import {
 } from "../services/products"
 
 import type { Product } from "../types/product"
-import { addToCart } from "../utils/cart"
+import { addToCart } from "../services/cart"
 
 export default function ProductDetails() {
 
@@ -101,11 +101,20 @@ export default function ProductDetails() {
 
                     <button
                         className="bg-black text-white px-8 py-3 rounded-lg"
-                        onClick={() => {
-                            addToCart(product)
-                            alert("Product added to cart!")
+                        onClick={async () => {
+
+                            try {
+
+                                await addToCart(product.id)
+
+                                alert("Added to cart")
+
+                            } catch (err) {
+
+                                alert("Please login first")
+                            }
                         }}
-                        
+
                     >
                         Add To Cart
                     </button>

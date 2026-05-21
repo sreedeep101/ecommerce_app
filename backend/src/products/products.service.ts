@@ -10,7 +10,7 @@ export class ProductsService {
 
   constructor(
     private prisma: PrismaService
-  ) {}
+  ) { }
 
   async getAllProducts() {
 
@@ -25,18 +25,18 @@ export class ProductsService {
 
   async getProductById(id: number) {
 
-  return this.prisma.product.findUnique({
+    return this.prisma.product.findUnique({
 
-    where: {
-      id,
-    },
+      where: {
+        id,
+      },
 
-    include: {
-      images: true,
-      category: true,
-    },
-  })
-}
+      include: {
+        images: true,
+        category: true,
+      },
+    })
+  }
 
   async createProduct(data: CreateProductDto) {
 
@@ -81,5 +81,26 @@ export class ProductsService {
         category: true,
       },
     })
+  }
+  
+  async deleteProduct(id: number) {
+
+    await this.prisma.productImage.deleteMany({
+
+      where: {
+        productId: id,
+      },
+    })
+
+    await this.prisma.product.delete({
+
+      where: {
+        id,
+      },
+    })
+
+    return {
+      message: 'Product deleted',
+    }
   }
 }

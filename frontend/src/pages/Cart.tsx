@@ -5,19 +5,34 @@ import {
 
 import {
   getCart,
-  removeFromCart,
-} from "../utils/cart"
+  removeCartItem,
+} from "../services/cart"
 
 import type { CartItem } from "../types/cart"
+import { Link } from "react-router-dom"
 
 export default function Cart() {
 
   const [cart, setCart] =
     useState<CartItem[]>([])
 
+  const fetchCart = async () => {
+
+    try {
+
+      const data = await getCart()
+
+      setCart(data.items)
+
+    } catch (err) {
+
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
 
-    setCart(getCart())
+    fetchCart()
 
   }, [])
 
@@ -90,13 +105,11 @@ export default function Cart() {
 
               <button
 
-                onClick={() => {
+                onClick={async () => {
 
-                  removeFromCart(
-                    item.product.id
-                  )
+                  await removeCartItem(item.product.id)
 
-                  setCart(getCart())
+                  await fetchCart()
                 }}
 
                 className="bg-red-500 text-white px-4 py-2 rounded"
@@ -118,6 +131,16 @@ export default function Cart() {
           Total: ₹{total}
 
         </h2>
+
+        <Link to="/checkout">
+
+          <button
+            className="bg-black text-white px-8 py-3 rounded-lg mt-5"
+          >
+            Proceed To Checkout
+          </button>
+
+        </Link>
 
       </div>
 

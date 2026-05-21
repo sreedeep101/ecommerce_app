@@ -1,6 +1,7 @@
 import type { Product } from "../types/product"
 import { Link } from "react-router-dom"
 
+
 type Props = {
   product: Product
 }
